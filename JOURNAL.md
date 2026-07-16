@@ -16,8 +16,22 @@ Anyways, with that out of the way I'm going to jump straight into designing the 
 
 # July 15 - Continued Work on Schematic
 
-Ok, so in the gap between entries, I realized that I kind of suck at PCB design still, so I actually made an STM32 devboard as practice. I already have a better grasp of the software and PCB design in general so this should be much easier. I don't know why I tried to CAN first earlier, so I'm going to move to working on the basic MCU setup. First, the MCU that I'm actually going to be using is the STM32F407VGT6. This is the same MCU that the premade OpenFFBoard uses. Using a software called STM32CubeMX I can tell what pins I need to breakout.
+Ok, so in the gap between entries, I realized that I kind of suck at PCB design still, so I actually made an STM32 devboard as practice. I already have a better grasp of the software and PCB design in general so this should be much easier. I don't know why I tried to CAN first earlier, so I'm going to move to working on the basic MCU setup. First, the MCU that I'm actually going to be using is the STM32F407VGT6. This is the same MCU that the premade OpenFFBoard uses. Using a software called STM32CubeMX I can tell what pins I need to breakout. I'm currently breaking out:
+- CAN
+- SWD Debug
+- USB
+- Crystal
 
-<img width="487" height="492" alt="image" src="https://github.com/user-attachments/assets/3d2fd351-9aa1-48cb-bf26-4a52e27d9591" />
+<img width="853" height="796" alt="image" src="https://github.com/user-attachments/assets/bd0afba8-771d-4ba0-94d8-289eca58e66c" />
 
-I'm going to start with my decoupling caps for power.
+I'm going to start with my decoupling caps for power. The STM32 I'm using has 6 VDD pins + 1 additional VBAT pin, so I'm using 7 100nF decoupling caps as well as an additional 10uF bulk decoupling cap. I'm also using a pretty standard setup to setup VDDA with a ferrite bead. Next are the VCAP pins, these need to be pulled down to ground with a 2.2uF cap for each pin. For NRST, I just attached a 100nF decoupling cap to GND so it doesn't accidently activate and put the board into reset mode, then for BOOT0 I just hooked up a switch.
+
+<img width="849" height="781" alt="image" src="https://github.com/user-attachments/assets/627e8cf3-ff85-49f7-a300-619b6586bafc" />
+
+Next is the crystal oscillator. This MCU can use a 4-26 MHz crystal, but I'm just going to settle on a 16 MHz one. Crystals also need two symmetrical external caps to run correctly. The capacitance of these can be calcuated relatively simply:
+
+$C_ext=2*(C_L-C_stray)$
+
+$C_L$ refers to the crystal's load capacitance, which for the one I'm using is 9pF and $C_stray$ refers to the stray capacitance of the PCB, which I'm going to assume is 5pF. Plugging this into the formula gets me a capacitance of 8pF.
+
+<img width="591" height="519" alt="image" src="https://github.com/user-attachments/assets/59cfafe3-cd63-4075-8dc5-26bac4d93a8b" />
