@@ -14,7 +14,7 @@ Anyways, with that out of the way I'm going to jump straight into designing the 
 
 **Total Time Spent: 2.23 Hours**
 
-# July 15 - Continued Work on Schematic
+# July 16 - Continued Work on Schematic
 
 Ok, so in the gap between entries, I realized that I kind of suck at PCB design still, so I actually made an STM32 devboard as practice. I already have a better grasp of the software and PCB design in general so this should be much easier. I don't know why I tried to CAN first earlier, so I'm going to move to working on the basic MCU setup. First, the MCU that I'm actually going to be using is the STM32F407VGT6. This is the same MCU that the premade OpenFFBoard uses. Using a software called STM32CubeMX I can tell what pins I need to breakout. I'm currently breaking out:
 - CAN
@@ -30,8 +30,24 @@ I'm going to start with my decoupling caps for power. The STM32 I'm using has 6 
 
 Next is the crystal oscillator. This MCU can use a 4-26 MHz crystal, but I'm just going to settle on a 16 MHz one. Crystals also need two symmetrical external caps to run correctly. The capacitance of these can be calcuated relatively simply:
 
-$C_ext=2*(C_L-C_stray)$
+$C_ext=2*(C_L-C_{stray})$
 
-$C_L$ refers to the crystal's load capacitance, which for the one I'm using is 9pF and $C_stray$ refers to the stray capacitance of the PCB, which I'm going to assume is 5pF. Plugging this into the formula gets me a capacitance of 8pF.
+$C_L$ refers to the crystal's load capacitance, which for the one I'm using is 9pF and $C_{stray}$ refers to the stray capacitance of the PCB, which I'm going to assume is 5pF. Plugging this into the formula gets me a capacitance of 8pF.
 
 <img width="591" height="519" alt="image" src="https://github.com/user-attachments/assets/59cfafe3-cd63-4075-8dc5-26bac4d93a8b" />
+
+Then I added the other connections:
+
+<img width="746" height="403" alt="image" src="https://github.com/user-attachments/assets/90eb31f9-b105-46ba-9a7b-582deec3a69b" />
+
+And this connector for SWD:
+
+<img width="255" height="232" alt="image" src="https://github.com/user-attachments/assets/f8bf84fc-64aa-4f79-b9c7-8c3627d432d8" />
+
+Additionally, on a seperate sheet, I wired my CAN bus setup. I'm using the SN65HVD230 CAN transceiver as opposed to the TCAN332 because it is cheaper. As you can see, I have two CAN busses, one for input, and one for if I want to add some external CAN device later, then I also have a jumper that controls if the CAN bus terminates there or not:
+
+<img width="1166" height="610" alt="image" src="https://github.com/user-attachments/assets/e65d9279-b8d6-44ed-8792-63dbaf2a352a" />
+
+Another thing you might have noticed is that I'm using an explicit CAN_GND connection for this rather than normal CAN. This is because (according to Claude) having everything on one GND domain would cause a lot of interference. To fix this, I'm going to have three seperate domains, one for MCU GND, one for CAN GND, and one for USB GND.
+
+**Total Time Spent: 1.85 Hours**
