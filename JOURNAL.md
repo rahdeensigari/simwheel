@@ -51,3 +51,28 @@ Additionally, on a seperate sheet, I wired my CAN bus setup. I'm using the SN65H
 Another thing you might have noticed is that I'm using an explicit CAN_GND connection for this rather than normal CAN. This is because (according to Claude) having everything on one GND domain would cause a lot of interference. To fix this, I'm going to have three seperate domains, one for MCU GND, one for CAN GND, and one for USB GND.
 
 **Total Time Spent: 1.85 Hours**
+
+# July 18 - Continued Work on Schematic
+
+I started work on the USB isolator. OpenFFBoard documentation says to have an external USB isolator, but I'm just going to integrate one on the board itself. To do this I need two components, both a power and data isolator. For the data isolator, I decided to use the ADUM3160, it's pretty standard for isolation applications like this. The power isolator was a bit more difficult to chose, mainly because the one that's most commonly used was made by a brand that was sanctioned by the US government, and all the other alternatives had very large profiles. In the end, I decided on the NTE0503MC-R. It's cheap, and has a small enough profile to where it is viable to use (although it is still going to be an eyesore on the board).
+
+<img width="447" height="447" alt="image" src="https://github.com/user-attachments/assets/38bc912d-6d6d-407e-a331-99d4d125d758" />
+
+This is everything connected together. I'm using a USB-C receptacle for ease.
+
+<img width="1880" height="864" alt="image" src="https://github.com/user-attachments/assets/56a7420c-9f51-407b-a762-a423e5e318bd" />
+
+I also added an indicator LED.
+
+<img width="412" height="248" alt="image" src="https://github.com/user-attachments/assets/98618c77-3d4c-4d6e-acb3-55ea01a229db" />
+
+I think that's actually all. Here's the entire schematic:
+
+<img width="1202" height="307" alt="image" src="https://github.com/user-attachments/assets/a0e9ff35-4162-4a38-95a6-f14e6d24317f" />
+<img width="1292" height="889" alt="image" src="https://github.com/user-attachments/assets/bef8514f-8c3a-424e-8f9b-04755b2db466" />
+<img width="1179" height="796" alt="image" src="https://github.com/user-attachments/assets/81921709-4d43-4d6f-8d55-e51cce7efb5a" />
+<img width="1495" height="1001" alt="image" src="https://github.com/user-attachments/assets/6efc74f2-80e5-4d84-824d-3eaf2ce7556c" />
+
+(Yes ts took almost 3 hours. Figuring out USB was a pain in the ass, plus there were a lot of other small things I didn't mention)
+
+**Total Time Spent: 2.7 Hours**
