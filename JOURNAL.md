@@ -76,3 +76,17 @@ I think that's actually all. Here's the entire schematic:
 (Yes ts took almost 3 hours. Figuring out USB was a pain in the ass, plus there were a lot of other small things I didn't mention)
 
 **Total Time Spent: 2.7 Hours**
+
+# July 25 - PCB Layout
+
+I actually skipped through a lot of stuff by accident so let me briefly summarize everything.
+
+First, I assigned footprints to all of the parts I am going to be using. A lot of them were hard to find (I actually had to make my own for the inductor) but I eventually got all of them.
+
+<img width="729" height="820" alt="image" src="https://github.com/user-attachments/assets/03540224-fb7b-4518-b169-af194f438e33" />
+
+After that, I imported everything in my PCB (don't have a photo I already started). I don't think I can do this as 2 layer, so I'm going to make this a 4 layer board (signal-ground-power-signal). I started my layout with my VDD decoupling capacitors:
+
+<img width="875" height="825" alt="image" src="https://github.com/user-attachments/assets/2fe84a0b-0fda-4559-b532-d2b826156bc3" />
+
+**22**
