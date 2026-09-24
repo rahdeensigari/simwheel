@@ -89,4 +89,37 @@ After that, I imported everything in my PCB (don't have a photo I already starte
 
 <img width="875" height="825" alt="image" src="https://github.com/user-attachments/assets/2fe84a0b-0fda-4559-b532-d2b826156bc3" />
 
-**22**
+**Total Time Spent: 2.2**
+
+# September 23 - Some Rescoping
+
+As you can see, it's been a long while since I've worked on this. I spent that period learning a bit more about PCB design, and there's a couple of important changes I want to make.
+
+First, I'm going to break out some more GPIO pins. Specifically, all of the GPIO pins that are on the official OpenFFBoard. I found a list of these [here](https://github.com/Ultrawipf/OpenFFBoard/wiki/Pinouts-and-peripherals) and I just copied them into STM32CubeMX. 90% of these aren't necessary, but I'm going to include them for good measure.
+
+Digital inputs:
+<img width="243" height="501" alt="image" src="https://github.com/user-attachments/assets/365f4fca-449e-4ea8-af9b-e32000daea7e" />
+
+Analog inputs:
+<img width="281" height="717" alt="image" src="https://github.com/user-attachments/assets/fac07377-97ef-4afd-bb53-0b1faf4b1d29" />
+
+SPI2:
+<img width="311" height="295" alt="image" src="https://github.com/user-attachments/assets/69c759e9-7347-4001-a8f6-a92591d6c046" />
+
+PWM:
+<img width="361" height="267" alt="image" src="https://github.com/user-attachments/assets/ac09a52c-c108-497e-b34f-4a4d4b894394" />
+
+<img width="1113" height="1037" alt="image" src="https://github.com/user-attachments/assets/05d854df-af71-4ac9-b12b-c08d74908773" />
+
+Huge change I'm going to make, I'm going to remove the USB isolator and instead have it separately like the official OpenFFBoard recommends. This simplifies my board by a lot, it completely removes the need for separate ground domains and means I don't have to integrate the large DC-DC converter in my design. I completely removed both the NTE0503MC-R converter and the ADuM3160 isolator and instead replaced it with a simple 5V to 3v3 regulator. I replaced these with a simple LDO regulator, specifically the AMS1117-3.3. I also added some ESD protection in the form of a USBLC6-2SC6, which I have past experience with.
+
+ESD protection:
+<img width="918" height="843" alt="image" src="https://github.com/user-attachments/assets/7c37de99-e80d-409c-92c1-c8360a9d17d4" />
+
+Voltage regulation. The datasheet for the AMS1117-3.3 says to use tantalum caps, but I instead added a 1R resistor to the output 22uF cap to increase the ESR to match that of a tantalum capacitor:
+<img width="905" height="316" alt="image" src="https://github.com/user-attachments/assets/eb44710f-e61f-426d-bb4a-270e44ad57ff" />
+
+Also, for good measure, I added some pi filtering to VBUS:
+<img width="1048" height="408" alt="image" src="https://github.com/user-attachments/assets/db9cab75-f3a8-42f8-8b4a-c3bd6d21af91" />
+
+**Total Time Spent: 2.34 Hours**
