@@ -1,4 +1,4 @@
-# July 10 - Starting Research + Starting Schematic
+<img width="327" height="354" alt="image" src="https://github.com/user-attachments/assets/7c0aa4a1-cc94-461b-9a30-c3439ccf9ed4" /># July 10 - Starting Research + Starting Schematic
 
 I've wanted a sim racing setup for a while now, so I've decided to challenge myself into building one on my own. For now, I'm just going to start with the wheel, then do the pedals, shifter, and hand brake later on. This wheel is going to be able to connect wihth most racing games using the OpenFFBoard firmware library, which I can flash onto an STM32 board. Technically, they already sell a premade board with everything you need on it... but that's boring so instead I'm going to design my own. It's essentially just a modified STM32 devboard. For force feedback, I'm going to use an Eaglepower LA8308 motor with an ODrive S1 motor controller, both of which I already have from a past project. I'm not sure if I'm going to have it be direct driven or if I'm going to have to gear it down.
 
@@ -119,7 +119,56 @@ ESD protection:
 Voltage regulation. The datasheet for the AMS1117-3.3 says to use tantalum caps, but I instead added a 1R resistor to the output 22uF cap to increase the ESR to match that of a tantalum capacitor:
 <img width="905" height="316" alt="image" src="https://github.com/user-attachments/assets/eb44710f-e61f-426d-bb4a-270e44ad57ff" />
 
-Also, for good measure, I added some pi filtering to VBUS:
+Also, for good measure, I added some pi filtering to VBUS (credit to Claude):
 <img width="1048" height="408" alt="image" src="https://github.com/user-attachments/assets/db9cab75-f3a8-42f8-8b4a-c3bd6d21af91" />
 
 **Total Time Spent: 2.34 Hours**
+
+# September 24/25 - Continued Schematic Changes
+
+First, I changed the values of these caps to 100n according to AN4488 (credit to Claude):
+<img width="986" height="352" alt="image" src="https://github.com/user-attachments/assets/848a865f-aced-412e-b44f-791350a6fda7" />
+
+I then added the net labels to all of the other pins I broke out yesterday:
+<img width="792" height="559" alt="image" src="https://github.com/user-attachments/assets/4cc7638c-e803-4bbf-a179-f48ab32a72b0" />
+
+I then started to break these pins out to headers. I started with SPI2, and I think I'm probably going to have this be a JST-XH header:
+<img width="488" height="596" alt="image" src="https://github.com/user-attachments/assets/140a4fbe-6273-4ef0-a495-2ebe0b335356" />
+
+Then, I broke out all of the analog inputs. I'm going to give each one a 3v3 pin, a GND pin, and a signal pin. Just like before, these are going to be JST-XH headers:
+<img width="881" height="564" alt="image" src="https://github.com/user-attachments/assets/6f2ae247-7732-4652-b507-20423a50457b" />
+
+For digital pins, I'm going to use one large header block with a pin for each digital pin (10 in total, 2 GND, 8 digital). To do this, I'm using the S10B-PUDSS-1 header, which is the same type that the ODrive S1 uses:
+<img width="319" height="495" alt="image" src="https://github.com/user-attachments/assets/0a8ecf10-1967-4fef-824b-b8b036def6db" />
+<img width="167" height="177" alt="image" src="https://github.com/user-attachments/assets/37e97035-dabe-4f12-9405-ee43ce68aa16" />
+
+Finally, I added PWM. Pretty simple, just a 5 pin JST-XH header:
+<img width="327" height="354" alt="image" src="https://github.com/user-attachments/assets/65ef56b9-0cd5-4136-a614-1cc92af3f779" />
+
+I also just pushed everything on the digital header down a port and added a 3.3V pin instead of just leaving an extra pin unconnected:
+<img width="506" height="759" alt="image" src="https://github.com/user-attachments/assets/dd8bd5e4-9340-41c7-b097-0e80e513d38d" />
+
+This is kind of random, but I also just thought to add a pulldown resistor for the Rs pin on the CAN transceiver:
+<img width="221" height="268" alt="image" src="https://github.com/user-attachments/assets/6cad3b8e-f597-4e43-8e3b-d5f02134d9fb" />
+
+I also decided to add an RC filter to the analog ports, apparently this is a pretty common practice:
+<img width="599" height="442" alt="image" src="https://github.com/user-attachments/assets/623c78ad-725a-4710-9735-d0ce4434d2e6" />
+<img width="1230" height="619" alt="image" src="https://github.com/user-attachments/assets/fed399f7-c1a7-426e-9e8b-cd367455f7c5" />
+
+These are all of the connectors overall, with the exception of CAN. I'm not sure as to why I decided on having CAN be on a separate page, but I am starting to regret it a bit now. It's not really worth changing though:
+<img width="1751" height="413" alt="image" src="https://github.com/user-attachments/assets/c428ec2e-5f79-4749-b03c-fc61a864c223" />
+
+I also added a proper NRST button based off of ST's recommendations:
+<img width="591" height="514" alt="image" src="https://github.com/user-attachments/assets/e15dd70e-4a56-470a-b01f-aa71b6079824" />
+
+I also hooked up NRST to the SWD header:
+<img width="584" height="646" alt="image" src="https://github.com/user-attachments/assets/a4c3d8cc-22f4-4789-b040-1c95eb0649c3" />
+
+I want to add a proper status LED that can be controlled with firmware. To do this, I first broke out a GPIO output pin from STM32CubeMX and in KiCad that will control the LED:
+<img width="265" height="470" alt="image" src="https://github.com/user-attachments/assets/5c45fb06-cb3f-4b98-b020-df5bb6e90e5c" />
+<img width="627" height="269" alt="image" src="https://github.com/user-attachments/assets/bc455559-99c4-4a2d-b4f8-2a4ac9ca38cf" />
+
+I decided to use a 120R resistor to simplify my BOM, as I'm already using one for CAN:
+<img width="889" height="455" alt="image" src="https://github.com/user-attachments/assets/36fe9132-1720-4fd0-82d0-74b80a025252" />
+
+**Total Time Spent: 1.83 Hours**
