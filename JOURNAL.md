@@ -186,10 +186,10 @@ I also swapped the order of the capacitor and resistor on the analog pin RC filt
 Finally, I added an external series resistor to the crystal. I intended on doing this earlier but forgot. I calculated the optimal resistance for this through the formula:
 
 $$
-R_{ext} = \frac{1}{2\pi fC}\\
-where\\
-f = Frequency of the Crystal = 16MHz\\
-C = Capacitance of the Load Capacitors = 8pF\\
+R_{ext} = \frac{1}{2\pi fC}\newline
+where\newline
+f = Frequency of the Crystal = 16MHz\newline
+C = Capacitance of the Load Capacitors = 8pF\newline
 $$
 
 Plugging everything into this formula yielded a result of **1243R,** which I rounded down to 1kR because I'm already using capacitors of those values:
