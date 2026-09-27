@@ -189,7 +189,9 @@ $$
 R_{ext} = \frac{1}{2\pi fC}
 $$
 
+$$
 where
+$$
 
 $$
 f = Frequency of the Crystal = 16MHz\newline
