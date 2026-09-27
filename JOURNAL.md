@@ -173,10 +173,28 @@ I decided to use a 120R resistor to simplify my BOM, as I'm already using one fo
 
 **Total Time Spent: 1.83 Hours**
 
-# September 26 - Finished Schematic, Footprint assignments
+# September 26 - Finished Schematic
 
 The above entry actually finished the schematic feature wise. I asked some other people to review the schematic as well, but I did run a PDF of my schematic so far (in the [docs](/docs) folder) through Claude for a very surface level sanity check. Of course, any changes that AI tells me to make I triple check through actual verifiable sources. Here are some changes that I made:
 
+I accidentally swapped the D and R pins on the CAN transceiver, this was a pretty easy fix, I literally just swapped the net labels. Nothing really noteworthy to say about that:
+<img width="455" height="161" alt="image" src="https://github.com/user-attachments/assets/f81e4a04-c9d8-40d4-bb6a-8b32875af1d6" />
 
+I also swapped the order of the capacitor and resistor on the analog pin RC filters, I think I was thinking the circuit through as the STM32 being the input for some reason (I was tired). Honestly, the board would have worked anyways, but I went ahead and swapped them back to where they should have been:
+<img width="1495" height="817" alt="image" src="https://github.com/user-attachments/assets/809aeb7d-5e4c-46e7-9cf6-c224d04fa82f" />
 
-**Total Time Spent: +15**
+Finally, I added an external series resistor to the crystal. I intended on doing this earlier but forgot. I calculated the optimal resistance for this through the formula:
+
+$$
+R_{ext} = \frac{1}{2\pi fC}\\
+where\\
+f = Frequency of the Crystal = 16MHz\\
+C = Capacitance of the Load Capacitors = 8pF\\
+$$
+
+Plugging everything into this formula yielded a result of **1243R,** which I rounded down to 1kR because I'm already using capacitors of those values:
+<img width="723" height="433" alt="image" src="https://github.com/user-attachments/assets/4673f569-2bc2-4c8b-beb1-e650e58fb541" />
+
+Everything else seems good, I'm going to wait on some actual human feedback then move on to the actual PCB.
+
+**Total Time Spent: 0.5 Hours**
