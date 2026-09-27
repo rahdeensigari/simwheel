@@ -172,3 +172,11 @@ I decided to use a 120R resistor to simplify my BOM, as I'm already using one fo
 <img width="889" height="455" alt="image" src="https://github.com/user-attachments/assets/36fe9132-1720-4fd0-82d0-74b80a025252" />
 
 **Total Time Spent: 1.83 Hours**
+
+# September 26 - Finished Schematic, Footprint assignments
+
+The above entry actually finished the schematic feature wise. I asked some other people to review the schematic as well, but I did run a PDF of my schematic so far (in the [docs](/docs) folder) through Claude for a very surface level sanity check. Of course, any changes that AI tells me to make I triple check through actual verifiable sources. Here are some changes that I made:
+
+
+
+**Total Time Spent: +15**
